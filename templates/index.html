@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>sadire2023</title>
+    <style>
+        body { background: rgb(37, 37, 142); font-family: Arial, sans-serif; max-width: 900px; margin: auto; padding: 20px; color: white; text-align: center; }
+        .container { padding: 20px; border-radius: 8px; }
+        h1 { font-size: 36px; }
+        
+        .upload-form { background: rgba(255, 255, 255, 0.1); padding: 20px; margin: 20px 0; border-radius: 10px; }
+        .upload-form input, .upload-form button { padding: 10px; margin: 10px 0; font-size: 16px; }
+        .upload-form button { background: #ffcc00; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; font-weight: bold; }
+        .upload-form button:hover { background: #ff9900; }
+
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; padding: 20px; }
+        .image-item { background: rgba(255, 255, 255, 0.2); padding: 15px; border-radius: 8px; }
+        .image-preview { max-width: 100%; height: auto; border-radius: 5px; }
+        .title { font-weight: bold; font-size: 18px; margin-top: 10px; }
+        .desc { font-size: 14px; color: #ddd; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SkyLens</h1>
+        <div class="upload-form">
+            <form method="post" enctype="multipart/form-data" action="/upload">
+                <label>Choose JPEG image to upload</label><br>
+                <input type="file" name="form_file" accept="image/jpeg,image/jpg" required><br>
+                <button type="submit">Upload</button>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <h2>Uploaded Images</h2>
+        <div class="grid-container">
+            {% for file in files %}
+            <div class="image-item">
+                <a href="/files/{{ file.name }}" download="{{ file.name }}">
+                    <img src="/files/{{ file.name }}" class="image-preview" alt="{{ file.name }}">
+                </a>
+                <div class="title">{{ file.title }}</div>
+                <div class="desc">{{ file.description }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
